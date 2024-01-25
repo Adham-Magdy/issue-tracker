@@ -12,12 +12,12 @@ interface IssueForm{
 }
 const NewIssuePage = () => {
   // useForm
-  const {register,control} = useForm<IssueForm>();
+  const {register,control,handleSubmit} = useForm<IssueForm>();
   console.log(register('title'));
   return (
-    <div className = "max-w-xl space-y-3 p-3 border-blue-100 border-2 rounded-md ">
+    <form className = "max-w-xl space-y-3 p-3 border-blue-100 border-2 rounded-md " onSubmit={handleSubmit((data)=> console.log(data))}>
       <TextField.Root>
-        <TextField.Input placeholder='Title' {...register}/>
+        <TextField.Input placeholder='Title' {...register("title")}/>
       </TextField.Root>
       {/* Using controller to render markdown editor with useForm  */}
       <Controller
@@ -25,8 +25,8 @@ const NewIssuePage = () => {
       control={control}
       render={({field}) => <SimpleMDE  placeholder='Description of issue' {...field}/>}
       />
-      <Button>Submit New Issue</Button>
-    </div>
+      <Button className='cursor-pointer'>Submit New Issue</Button>
+    </form>
   )
 }
 
