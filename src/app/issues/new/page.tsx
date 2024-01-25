@@ -5,6 +5,8 @@ import "easymde/dist/easymde.min.css";
 import React from 'react'
 import { string } from 'zod';
 import { Controller, useForm } from 'react-hook-form';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface IssueForm{
   title:string;
@@ -13,9 +15,13 @@ interface IssueForm{
 const NewIssuePage = () => {
   // useForm
   const {register,control,handleSubmit} = useForm<IssueForm>();
+  const router = useRouter();
   console.log(register('title'));
   return (
-    <form className = "max-w-xl space-y-3 p-3 border-blue-100 border-2 rounded-md " onSubmit={handleSubmit((data)=> console.log(data))}>
+    <form className = "max-w-xl space-y-3 p-3 border-blue-100 border-2 rounded-md " onSubmit={handleSubmit(async (data)=>{
+      await axios.post("/api/issues",data);
+      router.push('/issues');
+    })}>
       <TextField.Root>
         <TextField.Input placeholder='Title' {...register("title")}/>
       </TextField.Root>
