@@ -25,6 +25,8 @@ import Spinner from "@/app/components/Spinner";
 //   description: string;
 // }
 type IssueForm = z.infer<typeof createIssueSchema>;
+
+
 const NewIssuePage = () => {
   // useForm
   const { register, control, handleSubmit,formState:{errors}} = useForm<IssueForm>({
@@ -33,7 +35,16 @@ const NewIssuePage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
-
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setSubmitting(true);
+      await axios.post("/api/issues", data);
+      router.push("/issues");
+    } catch (error) {
+      setSubmitting(false);
+      setError("Unexpected error occurred");
+    }
+  });
   return (
     <div className="max-w-xl ">
       {error && (
@@ -43,16 +54,7 @@ const NewIssuePage = () => {
       )}
       <form
         className="space-y-3 p-3 border-blue-100 border-2 rounded-md "
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setSubmitting(true);
-            await axios.post("/api/issues", data);
-            router.push("/issues");
-          } catch (error) {
-            setSubmitting(false);
-            setError("Unexpected error occurred");
-          }
-        })}
+        onSubmit={onSubmit}
       >
         <TextField.Root>
           <TextField.Input placeholder="Title" {...register("title")} />
