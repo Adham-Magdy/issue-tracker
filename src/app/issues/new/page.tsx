@@ -17,6 +17,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 // interface IssueForm {
 //   title: string;
@@ -53,13 +54,9 @@ const NewIssuePage = () => {
           <TextField.Input placeholder="Title" {...register("title")} />
         </TextField.Root>
         {/* Display title error */}
-        {
-          errors.title && (
-            <Callout.Root color="red" className="mb-5 bg-white">
-          <Callout.Text>{errors.title.message}</Callout.Text>
-        </Callout.Root>
-          )
-        }
+        <ErrorMessage>
+          {errors.title?.message}
+        </ErrorMessage>
         {/* Using controller to render markdown editor with useForm  */}
         <Controller
           name="description"
@@ -68,13 +65,9 @@ const NewIssuePage = () => {
             <SimpleMDE placeholder="Description of issue" {...field} />
           )}
         />
-        {
-          errors.description && (
-            <Callout.Root color="red"  className="mb-5 bg-white ">
-          <Callout.Text>{errors.description.message}</Callout.Text>
-        </Callout.Root>
-          )
-        }
+       <ErrorMessage>
+        {errors.description?.message}
+       </ErrorMessage>
         <Button className="cursor-pointer">Submit New Issue</Button>
       </form>
     </div>
