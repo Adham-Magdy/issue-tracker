@@ -3,12 +3,14 @@ import { z } from "zod";
 import IssuesPage from '../../issues/page';
 import { PrismaClient } from "@prisma/client";
 import { createIssueSchema } from "@/app/validationSchemas";
+import prisma from "../../../../prisma/client";
 // using zod to validate data
 
 export const POST = async (request: NextRequest) => {
   const body = await request.json();
 
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
+  
   // validate body
   const validation = createIssueSchema.safeParse(body);
   // check if validation success
