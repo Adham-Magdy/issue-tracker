@@ -1,4 +1,6 @@
+import IssueStatusBadge from '@/app/components/IssueStatusBadge';
 import { PrismaClient } from '@prisma/client';
+import { Card, Flex, Heading, Text } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 import React from 'react'
 import { number } from 'zod';
@@ -11,7 +13,7 @@ const IssueDetailsPage = async ({params}:Props) => {
     const prisma = new PrismaClient();
 
     // validate id number of page
-    if(typeof params.id !== 'number') notFound();
+    // if(typeof params.id !== 'number') notFound();
     // return issue from db based on id
     const issue = await prisma.issue.findUnique({
         where:{id:parseInt(params.id)},
@@ -23,10 +25,16 @@ const IssueDetailsPage = async ({params}:Props) => {
     }
   return (
     <div>
-        <p>{issue.title}</p>
-        <p>{issue.description}</p>
-        <p>{issue.status}</p>
-        <p>{issue.createdAt.toDateString()}</p>
+        <Heading>{issue.title}</Heading>
+        <Flex gap={"5"} mb={"5"}>
+            <IssueStatusBadge status={issue.status}/>
+            <Text>{issue.createdAt.toDateString()}</Text>
+        </Flex>
+        <Card>
+        {issue.description}
+        </Card>
+       
+        
     </div>
   )
 }
