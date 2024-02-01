@@ -8,7 +8,6 @@ import {
   Text,
   TextFieldRoot,
 } from "@radix-ui/themes";
-import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import React, { useState } from "react";
 import { string, z } from "zod";
@@ -19,6 +18,7 @@ import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
+import dynamic from "next/dynamic";
 
 // interface IssueForm {
 //   title: string;
@@ -26,7 +26,11 @@ import Spinner from "@/app/components/Spinner";
 // }
 type IssueForm = z.infer<typeof createIssueSchema>;
 
+// disabling ssr using lazy loader with dynamic method
 
+const SimpleMDE = dynamic(()=> import("react-simplemde-editor"),{
+  ssr:false
+});
 const NewIssuePage = () => {
   // useForm
   const { register, control, handleSubmit,formState:{errors}} = useForm<IssueForm>({
