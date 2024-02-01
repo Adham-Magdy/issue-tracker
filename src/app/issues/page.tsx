@@ -11,7 +11,7 @@ const IssuesPage = async () => {
 
   // getALl issues from db
   const issues = await prisma.issue.findMany();
-  await delay(2000);
+  // await delay(2000);
   return (
     <div>
       <IssueAction />
