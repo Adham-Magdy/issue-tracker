@@ -52,9 +52,12 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       if (issue) {
         await axios.patch("/api/issues/" + issue.id, data);
         router.push("/issues");
+        router.refresh(); // refresh page for client side cache
       } else {
         await axios.post("/api/issues", data);
         router.push("/issues");
+        router.refresh(); // refresh page for client side cache
+
       }
     } catch (error) {
       setSubmitting(false);
