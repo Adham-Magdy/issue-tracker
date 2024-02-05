@@ -20,6 +20,7 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
 import dynamic from "next/dynamic";
 import { Issue } from "@prisma/client";
+import SimpleMDE from "react-simplemde-editor";
 
 // interface IssueForm {
 //   title: string;
@@ -29,9 +30,9 @@ type IssueFormData = z.infer<typeof createIssueSchema>;
 
 // disabling ssr using lazy loader with dynamic method
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
+// const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+//   ssr: false,
+// });
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   // useForm
   const {
