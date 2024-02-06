@@ -16,12 +16,13 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
     {isClient && (
       <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <Button color="red" className="w-44">Delete Issue</Button>
+        <Button color="red" className="w-44 cursor-pointer">Delete Issue</Button>
       </AlertDialog.Trigger>
       <AlertDialog.Content>
         <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
         <AlertDialog.Description>
-          Are you sure you want to delete this issue ? This action can not be undone.  
+          Are you sure you want to delete this issue ?
+           This action can not be undone.  
         </AlertDialog.Description>
     
         <Flex gap="3" mt="4" justify="end">
@@ -36,6 +37,7 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
             </Button>
           </AlertDialog.Action>
         </Flex>
+
       </AlertDialog.Content>
     </AlertDialog.Root>
   
