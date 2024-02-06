@@ -13,10 +13,21 @@ import { useRouter } from "next/navigation";
 
 const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
   const [isClient, setIsClient] = useState(false);
+  const [error, setError] = useState(false);
   const router = useRouter();
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const deleteIssue = async () => {
+    try {
+      await axios.delete("/api/issues/" + issueID);
+      router.push("/issues");
+      router.refresh();
+    } catch (error) {
+      setError(true);
+    }
+  };
   return (
     // Alert dialog for confirmation
     <>
@@ -45,11 +56,7 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
                   variant="solid"
                   className="cursor-pointer"
                   color="red"
-                  onClick={async () => {
-                    await axios.delete("/api/issues/" + issueID);
-                    router.push("/issues");
-                    router.refresh();
-                  }}
+                  onClick={deleteIssue}
                 >
                   Delete Issue
                 </Button>
@@ -58,6 +65,24 @@ const DeleteIssueButton = ({ issueID }: { issueID: number }) => {
           </AlertDialog.Content>
         </AlertDialog.Root>
       )}
+      {/* Show Alert dialog in case of error */}
+      <AlertDialog.Root open={error}>
+        <AlertDialog.Content>
+          <AlertDialog.Title>Error</AlertDialog.Title>
+          <AlertDialog.Description>
+            This issue could not be deleted.
+          </AlertDialog.Description>
+          <Button
+            color="gray"
+            variant="soft"
+            mt={"3"}
+            onClick={() => setError(false)}
+            className="cursor-pointer"
+          >
+            OK
+          </Button>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </>
   );
 };
