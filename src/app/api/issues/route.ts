@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import IssuesPage from '../../issues/page';
+import IssuesPage from '../../issues/list/page';
 import { PrismaClient } from "@prisma/client";
 import { createIssueSchema } from "@/app/validationSchemas";
 import prisma from "../../../../prisma/client";
